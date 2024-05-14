@@ -1,5 +1,6 @@
 let addButton = document.getElementById("addTask");
 let list = document.getElementById("list");
+const API_PORT = 3000;
 
 // Funktion zum erzeugen eines List elementes mit der Aufgabe
 function addTask(task) {
@@ -9,14 +10,16 @@ function addTask(task) {
 
   list.appendChild(li);
 }
-
+ /*
 addButton.onclick = function () {
   let userInput = document.getElementById("userInput"); // Das gesamte element wird in die Variable geladen
-  addTask(userInput.value); // Eine neue Aufgabe soll mit dem Wert des Elementes erzeugt werden
-  userInput.value = ""; // Das Input feld soll nun wieder geleert werden
-};
+  fetch(`http://127.0.0.1/${API_PORT}`,{
 
-function getTodos() {
+  })  
+};
+*/
+
+function getTodosFromPlaceholder() {
   fetch("https://jsonplaceholder.typicode.com/todos") // Promise, diese Zeile gibt einen Wert zurück
     .then((response) => response.json()) // nimmt den Wert und gibt Ihn in eine Funktion + gibt auch einen Wert aus
     .then((array) =>
@@ -26,6 +29,35 @@ function getTodos() {
     );
 }
 
+function getTodosFromApi(){
+  fetch(`http://127.0.0.1:${API_PORT}`)
+    .then((response) => response.json()) // nimmt den Wert und gibt Ihn in eine Funktion + gibt auch einen Wert aus
+    .then((array) =>
+      array.forEach((taskObject) => {
+        addTask(taskObject.title);
+      })
+    );
+}
+
+getTodosFromApi();
+
+/*
+const filtered = await data.filter(
+  (element) => element.id == id
+);
+const data = await fetch(
+  `https://imgur.com/r/${
+    subreddits[Math.floor(Math.random() * subreddits.length)]
+  }/hot.json`
+)
+  .then((response) => response.json())
+  .then((body) => body.data)
+
+const filtered = await data.filter(
+  (element) => element.animated == "false"
+);
+console.log(filtered);
+*/
 // myArray = ["Hund", "Hund", "Hund"];
 // for (i = 0; i < myArray.length; i++) {
 //   console.log(myArray[i]);
@@ -34,4 +66,5 @@ function getTodos() {
 
 ////////////////////////
 
-getTodos();
+//getTodos();
+//getTodoByID(3);
