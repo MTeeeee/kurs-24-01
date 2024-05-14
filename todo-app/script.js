@@ -40,6 +40,14 @@ function getTodosFromPlaceholder() {
     );
 }
 */
+/*
+function getTodo(){
+  fetch(`http://127.0.0.1:/todos/${id}`).then((response) => response.json()).then((todo => {
+    console.log(todo)  
+    addTask(todo);
+  }))
+}
+*/
 
 function getTodosFromApi(){
   fetch(`http://127.0.0.1:${API_PORT}`)

@@ -31,10 +31,23 @@ function writeTodos(todos){
     fs.writeFileSync(todoPfad, JSON.stringify(todos, null, 2));
 }
 
-// GET endpoint für HTTP-Requests
+// GET all endpoint für HTTP-Requests
 app.get('/', (req, res) => {
     const todos = readTodos();
     res.status(200).json(todos);
+})
+
+// GET by ID endpoint für HTTP-Requests
+app.get('/todos/:id', (req, res) => {
+    const todos = readTodos();
+    const todoID = req.params.id;
+    const todo = todos.find(t => t.id == todoID);
+
+    if(!todo){
+        res.status(404).send("Todo nicht gefunden!")
+    } else {
+        res.status(200).json(todo);
+    }
 })
 
 // funktion um die Nächste ID aus der JSON zu finden
