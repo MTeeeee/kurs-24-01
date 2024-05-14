@@ -17,6 +17,11 @@ app.use(bodyParser.json())
 
 // Funktion um Datei auslesen zu können
 function readTodos(){
+    // falls es nicht existiert, erstellen wir es
+    if(!fs.existsSync(todoPfad)){
+        fs.writeFileSync(todoPfad, JSON.stringify([]));
+    }
+
     const todos = fs.readFileSync(todoPfad);
     return JSON.parse(todos);
 }
