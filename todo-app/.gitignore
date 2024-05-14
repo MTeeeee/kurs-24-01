@@ -1,2 +1,4 @@
 node_modules
 todos.json
+package.json
+package-lock.json
