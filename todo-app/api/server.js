@@ -6,7 +6,12 @@ const app = express();
 const PORT = 3000;
 const todoPfad = '../todos.json'
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST'], // Allow only GET and POST requests
+    allowedHeaders: ['Content-Type'] // Allow only headers with Content-Type
+}));
+
 // middleware um JSON bodies zu parsen
 app.use(bodyParser.json())
 
@@ -27,8 +32,26 @@ app.get('/', (req, res) => {
     res.status(200).json(todos);
 })
 
+// funktion um die Nächste ID aus der JSON zu finden
+function getNextId(todos) {
+    return todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
+}
 // POST endpoint für HTTP-Requests
+app.post('/', (req, res) => {
+    const newTodo = req.body;
+    const todos = readTodos();
+    
 
+    const todoToAdd = {  // hier schreiben wir den inhalt des neuen Eintrags in der JSON
+        userId: 1,
+        id: getNextId(todos),
+        title: newTodo.title,
+        completed: false
+    }
+    todos.push(todoToAdd); 
+    writeTodos(todos);
+    res.status(201).send('Todo hinzugefügt.')
+})
 
 // Server starten
 app.listen(PORT, () => {
