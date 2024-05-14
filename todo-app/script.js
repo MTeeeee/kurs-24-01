@@ -1,3 +1,5 @@
+//const { response } = require("express");
+
 let addButton = document.getElementById("addTask");
 let list = document.getElementById("list");
 const API_PORT = 3000;
@@ -10,15 +12,24 @@ function addTask(task) {
 
   list.appendChild(li);
 }
- /*
+
 addButton.onclick = function () {
   let userInput = document.getElementById("userInput"); // Das gesamte element wird in die Variable geladen
-  fetch(`http://127.0.0.1/${API_PORT}`,{
-
-  })  
+  fetch(`http://127.0.0.1:${API_PORT}`,{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({title: userInput.value})
+  }).then(response => {
+    if(response.ok){
+      addTask(userInput.value);
+      userInput.value = "";
+    }
+  })
 };
-*/
 
+/*
 function getTodosFromPlaceholder() {
   fetch("https://jsonplaceholder.typicode.com/todos") // Promise, diese Zeile gibt einen Wert zurück
     .then((response) => response.json()) // nimmt den Wert und gibt Ihn in eine Funktion + gibt auch einen Wert aus
@@ -28,6 +39,7 @@ function getTodosFromPlaceholder() {
       })
     );
 }
+*/
 
 function getTodosFromApi(){
   fetch(`http://127.0.0.1:${API_PORT}`)
