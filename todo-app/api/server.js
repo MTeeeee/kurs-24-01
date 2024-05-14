@@ -36,12 +36,12 @@ app.get('/', (req, res) => {
 function getNextId(todos) {
     return todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
 }
+
 // POST endpoint für HTTP-Requests
 app.post('/', (req, res) => {
     const newTodo = req.body;
     const todos = readTodos();
     
-
     const todoToAdd = {  // hier schreiben wir den inhalt des neuen Eintrags in der JSON
         userId: 1,
         id: getNextId(todos),
